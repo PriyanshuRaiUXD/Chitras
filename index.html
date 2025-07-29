@@ -122,6 +122,20 @@
             background: #A3E635;
             opacity: 0.8;
         }
+
+        /* --- Animated Hamburger Icon --- */
+        .hamburger-menu .line {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .hamburger-menu.is-active .line-1 {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger-menu.is-active .line-2 {
+            opacity: 0;
+        }
+        .hamburger-menu.is-active .line-3 {
+            transform: translateY(-8px) rotate(-45deg);
+        }
     </style>
     <script>
         tailwind.config = {
@@ -168,21 +182,38 @@
                 <a href="#contact" class="hidden sm:inline-block bg-lime-light text-brand-dark font-bold py-3 px-6 rounded-lg text-base hover:scale-105 transform transition-transform duration-300 ease-in-out">
                     Let's Talk
                 </a>
-                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-brand-dark hover:bg-gray-200">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-brand-dark hover:bg-gray-200 hamburger-menu">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="line line-1" d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path class="line line-2" d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path class="line line-3" d="M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                 </button>
             </div>
         </div>
-        <!-- Mobile Navigation -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-sm">
-            <nav class="flex flex-col items-center gap-4 p-4">
-                <a href="#process" class="nav-link text-md font-medium text-brand-gray hover:text-lime-light transition-colors duration-300">Our Process</a>
-                <a href="#work" class="nav-link text-md font-medium text-brand-gray hover:text-lime-light transition-colors duration-300">Our Work</a>
-                <a href="#testimonials" class="nav-link text-md font-medium text-brand-gray hover:text-lime-light transition-colors duration-300">Testimonials</a>
-                <button id="open-about-modal-mobile" class="text-md font-medium text-brand-gray hover:text-lime-light transition-colors duration-300">About Us</button>
-            </nav>
-        </div>
     </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 bg-brand-dark/95 backdrop-blur-sm transform -translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="flex justify-end p-4">
+            <button id="mobile-menu-close-button" class="p-2 hamburger-menu is-active">
+                 <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="line line-1" d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path class="line line-2" d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path class="line line-3" d="M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="flex flex-col items-center justify-center h-full -mt-12 gap-8">
+            <a href="#process" class="mobile-nav-link text-3xl font-bold text-white hover:text-lime-light transition-colors duration-300">Our Process</a>
+            <a href="#work" class="mobile-nav-link text-3xl font-bold text-white hover:text-lime-light transition-colors duration-300">Our Work</a>
+            <a href="#testimonials" class="mobile-nav-link text-3xl font-bold text-white hover:text-lime-light transition-colors duration-300">Testimonials</a>
+            <button id="open-about-modal-mobile" class="mobile-nav-link text-3xl font-bold text-white hover:text-lime-light transition-colors duration-300">About Us</button>
+            <a href="#contact" class="mobile-nav-link mt-8 bg-lime-light text-brand-dark font-bold py-3 px-8 rounded-lg text-xl">
+                Let's Talk
+            </a>
+        </nav>
+    </div>
 
     <!-- Main Content -->
     <main class="p-4 md:p-6">
@@ -200,7 +231,7 @@
                             </p>
                         </div>
                         <div class="relative h-96 md:h-[500px] flex items-center justify-center bg-gray-100 overflow-hidden">
-                             <video class="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2" autoplay loop muted playsinline>
+                             <video class="absolute top-0 left-0 w-full h-full object-cover" autoplay loop muted playsinline>
                                 <source src="https://raw.githubusercontent.com/PriyanshuRaiUXD/Chitras-corner/main/31ihk0pzfcU5xYm3e3.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -497,30 +528,34 @@
 
     <!-- About Us Modal -->
     <div id="about-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
-        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-8 md:p-12 mx-auto transform transition-all duration-300 ease-in-out scale-95 opacity-0">
-            <div class="flex justify-between items-start">
-                 <h2 class="text-3xl md:text-4xl font-bold mb-4">The Brains Behind the Buzz</h2>
-                 <button id="close-about-modal" class="text-gray-500 hover:text-brand-dark text-3xl">&times;</button>
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl flex flex-col max-h-[90vh] transform transition-all duration-300 ease-in-out scale-95 opacity-0">
+            <div class="p-6 md:p-8 border-b border-gray-200 flex-shrink-0">
+                 <div class="flex justify-between items-center">
+                    <h2 class="text-2xl md:text-3xl font-bold">The Brains Behind the Buzz</h2>
+                    <button id="close-about-modal" class="text-gray-500 hover:text-brand-dark text-3xl">&times;</button>
+                 </div>
             </div>
-            <div class="text-brand-gray space-y-6 mt-4 font-light">
-                <p>Chitra's Corner isn't a stuffy agency; it's a dynamic duo on a mission. We started this because we saw too many great businesses getting lost in the social media noise. Our big idea? To offer the same high-level strategy and creative firepower as top-tier agencies, but without the scary price tag.</p>
-                
-                <div class="grid sm:grid-cols-2 gap-8 pt-6 border-t border-gray-200">
-                    <div class="flex flex-col items-center text-center">
-                        <img src="https://placehold.co/150x150/a3e635/1f2937?text=SU" alt="Sai Upasana" class="w-32 h-32 rounded-full mb-4 border-4 border-lime-light">
-                        <h3 class="font-semibold text-lg text-brand-dark">Sai Upasana</h3>
-                        <p class="text-sm text-lime-light font-medium mb-2">The Management Maestro (Pune, India)</p>
-                        <p>Sai is the organizational powerhouse who keeps the wheels turning. With a knack for clear communication and seamless project management, she ensures every client feels like our only client. She’s the strategic mind behind your campaign's success.</p>
+            <div class="p-6 md:p-8 overflow-y-auto">
+                <div class="text-brand-gray space-y-6 font-light">
+                    <p>Chitra's Corner isn't a stuffy agency; it's a dynamic duo on a mission. We started this because we saw too many great businesses getting lost in the social media noise. Our big idea? To offer the same high-level strategy and creative firepower as top-tier agencies, but without the scary price tag.</p>
+                    
+                    <div class="grid sm:grid-cols-2 gap-8 pt-6 border-t border-gray-200">
+                        <div class="flex flex-col items-center text-center">
+                            <img src="https://placehold.co/150x150/a3e635/1f2937?text=SU" alt="Sai Upasana" class="w-32 h-32 rounded-full mb-4 border-4 border-lime-light">
+                            <h3 class="font-semibold text-lg text-brand-dark">Sai Upasana</h3>
+                            <p class="text-sm text-lime-light font-medium mb-2">The Management Maestro (Pune, India)</p>
+                            <p>Sai is the organizational powerhouse who keeps the wheels turning. With a knack for clear communication and seamless project management, she ensures every client feels like our only client. She’s the strategic mind behind your campaign's success.</p>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <img src="https://placehold.co/150x150/121822/ffffff?text=PR" alt="Priyanshu Rai" class="w-32 h-32 rounded-full mb-4 border-4 border-brand-dark">
+                            <h3 class="font-semibold text-lg text-brand-dark">Priyanshu Rai</h3>
+                            <p class="text-sm text-lime-light font-medium mb-2">The Design & Tech Guru (Cologne, Germany)</p>
+                            <p>With an MSc in Human-Computer Interaction, Priyanshu is the creative and technical force. He crafts the stunning visuals and ensures everything works flawlessly, blending beautiful design with user-centric thinking to make your brand look and feel incredible online.</p>
+                        </div>
                     </div>
-                    <div class="flex flex-col items-center text-center">
-                        <img src="https://placehold.co/150x150/121822/ffffff?text=PR" alt="Priyanshu Rai" class="w-32 h-32 rounded-full mb-4 border-4 border-brand-dark">
-                        <h3 class="font-semibold text-lg text-brand-dark">Priyanshu Rai</h3>
-                        <p class="text-sm text-lime-light font-medium mb-2">The Design & Tech Guru (Cologne, Germany)</p>
-                        <p>With an MSc in Human-Computer Interaction, Priyanshu is the creative and technical force. He crafts the stunning visuals and ensures everything works flawlessly, blending beautiful design with user-centric thinking to make your brand look and feel incredible online.</p>
-                    </div>
-                </div>
 
-                <p class="pt-6 border-t border-gray-200 text-center">Together, from Pune to Cologne, we bridge continents to bring a unique global perspective to your local brand, ensuring you get world-class service that’s both personal and powerful.</p>
+                    <p class="pt-6 border-t border-gray-200 text-center">Together, from Pune to Cologne, we bridge continents to bring a unique global perspective to your local brand, ensuring you get world-class service that’s both personal and powerful.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -558,9 +593,25 @@
             // --- Mobile Menu Toggle ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton && mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+            const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+            const mobileNavLinks = mobileMenu.querySelectorAll('a, button');
+
+            const openMobileMenu = () => {
+                mobileMenu.classList.remove('-translate-x-full');
+                document.body.classList.add('overflow-hidden');
+            };
+
+            const closeMobileMenu = () => {
+                mobileMenu.classList.add('-translate-x-full');
+                document.body.classList.remove('overflow-hidden');
+            };
+
+            mobileMenuButton && mobileMenuButton.addEventListener('click', openMobileMenu);
+            mobileMenuCloseButton && mobileMenuCloseButton.addEventListener('click', closeMobileMenu);
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
             });
+
 
             // --- Nav Scrollspy Logic ---
             const sections = document.querySelectorAll('section[id], div[id]');
