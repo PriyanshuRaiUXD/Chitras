@@ -125,16 +125,17 @@
 
         /* --- Animated Hamburger Icon --- */
         .hamburger-menu .line {
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
+            transform-origin: center;
         }
         .hamburger-menu.is-active .line-1 {
-            transform: translateY(8px) rotate(45deg);
+            transform: translateY(7px) rotate(45deg);
         }
         .hamburger-menu.is-active .line-2 {
             opacity: 0;
         }
         .hamburger-menu.is-active .line-3 {
-            transform: translateY(-8px) rotate(-45deg);
+            transform: translateY(-7px) rotate(-45deg);
         }
     </style>
     <script>
@@ -182,7 +183,7 @@
                 <a href="#contact" class="hidden sm:inline-block bg-lime-light text-brand-dark font-bold py-3 px-6 rounded-lg text-base hover:scale-105 transform transition-transform duration-300 ease-in-out">
                     Let's Talk
                 </a>
-                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-brand-dark hover:bg-gray-200 hamburger-menu">
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-brand-dark hamburger-menu">
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path class="line line-1" d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path class="line line-2" d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -196,12 +197,8 @@
     <!-- Mobile Navigation Overlay -->
     <div id="mobile-menu" class="fixed inset-0 z-50 bg-brand-dark/95 backdrop-blur-sm transform -translate-x-full transition-transform duration-300 ease-in-out">
         <div class="flex justify-end p-4">
-            <button id="mobile-menu-close-button" class="p-2 hamburger-menu is-active">
-                 <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path class="line line-1" d="M4 6H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path class="line line-2" d="M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path class="line line-3" d="M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+            <button id="mobile-menu-close-button" class="p-2">
+                 <i data-lucide="x" class="w-8 h-8 text-white"></i>
             </button>
         </div>
         <nav class="flex flex-col items-center justify-center h-full -mt-12 gap-8">
@@ -598,11 +595,13 @@
 
             const openMobileMenu = () => {
                 mobileMenu.classList.remove('-translate-x-full');
+                mobileMenuButton.classList.add('is-active');
                 document.body.classList.add('overflow-hidden');
             };
 
             const closeMobileMenu = () => {
                 mobileMenu.classList.add('-translate-x-full');
+                mobileMenuButton.classList.remove('is-active');
                 document.body.classList.remove('overflow-hidden');
             };
 
